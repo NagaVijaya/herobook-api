@@ -10,22 +10,25 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 class HerobookApiApplicationTests {
 
 @Autowired
 MockMvc mockMvc;
 
-@MockBean
+@Autowired
 HeroService heroService;
 /**
  *
@@ -37,17 +40,53 @@ HeroService heroService;
  *
  */
 
- @Test
- public void testFindAllHeroesWithNull() throws Exception {
+    @Test
+    public void testFindAllHeroesWithEmptyList() throws Exception {
 
-     List<Hero> heroList = heroService.findAll();
+          mockMvc.perform(get("/api/heroes"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",hasSize(0)));
 
- 	MvcResult mvcResult = mockMvc.perform(get("/api/heroes"))
-			.andExpect(status().isOk())
-            .andReturn();
- 	assertThat(mvcResult.getResponse().getContentAsString()).isEmpty();
+    }
 
- }
+    @Test
+    public void testFindAllHeroesWithOneHero() throws Exception {
+
+        heroService.addHero(new Hero());
+        mockMvc.perform(get("/api/heroes"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$",hasSize(1)));
+
+    }
+
+    @Test
+    public void testFindAllHeroesWithMultipleHeroes() throws Exception {
+
+        heroService.addHero(new Hero(1,"hero1"));
+        heroService.addHero(new Hero(2,"hero2"));
+        heroService.addHero(new Hero(3,"hero3"));
+        heroService.addHero(new Hero(4,"hero4"));
+        heroService.addHero(new Hero(5,"hero5"));
+        mockMvc.perform(get("/api/heroes"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].name").value("hero1"))
+                .andExpect(jsonPath("$[1].id").value(2))
+                .andExpect(jsonPath("$[1].name").value("hero2"))
+                .andExpect(jsonPath("$[2].id").value(3))
+                .andExpect(jsonPath("$[2].name").value("hero3"))
+                .andExpect(jsonPath("$[3].id").value(4))
+                .andExpect(jsonPath("$[3].name").value("hero4"))
+                .andExpect(jsonPath("$[4].id").value(5))
+                .andExpect(jsonPath("$[4].name").value("hero5"));
+
+
+    }
+
+
 
 
 }
