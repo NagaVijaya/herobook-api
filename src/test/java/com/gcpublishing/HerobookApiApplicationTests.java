@@ -93,9 +93,7 @@ HeroService heroService;
      * When I retreive the hero
      * Then I can view all the details for that hero
      *
-     * Given I have an incorrect hero name
-     * When I retreive details for that hero
-     * Then I receive a message that it doesn't exist
+
      */
 
     @Test
@@ -122,12 +120,18 @@ HeroService heroService;
 
     }
 
+    /**
+     * Given I have an incorrect hero name
+     * When I retreive details for that hero
+     * Then I receive a message that it doesn't exist
+     */
+
     @Test
     public void testFindHeroByNameNotFound() throws Exception {
         Hero hero = buildHero();
         heroService.addHero(hero);
         MvcResult mvcResult = mockMvc.perform(get("/api/heroes/name/{name}", "Rocky1"))
-                .andExpect(status().isOk())
+                .andExpect(status().isNotFound())
                 .andReturn();
         assertThat(mvcResult.getResponse().getContentAsString()).isEmpty();
     }
