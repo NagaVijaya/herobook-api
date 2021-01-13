@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @RestController
@@ -29,9 +29,9 @@ public class HeroBookController {
     public ResponseEntity<Hero> findHeroByName(@PathVariable String name) {
 
         Hero hero = heroService.findByName(name);
-        ResponseEntity responseEntity = new ResponseEntity(hero, HttpStatus.OK);
+        ResponseEntity<Hero> responseEntity = new ResponseEntity<>(hero, HttpStatus.OK);
         if (hero == null) {
-            responseEntity = new ResponseEntity(hero, HttpStatus.NOT_FOUND);
+            responseEntity = new ResponseEntity<>(hero, HttpStatus.NOT_FOUND);
         }
 
         return responseEntity;
