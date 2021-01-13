@@ -86,6 +86,26 @@ HeroService heroService;
 
     }
 
+    /**
+     * Rule: Heroes have an image, real name, hero name, height, weight, special power, intelligence, strength, power, speed, agility, description, and story.
+     *
+     * Given I have the name of a hero
+     * When I retreive the hero
+     * Then I can view all the details for that hero
+     *
+     * Given I have an incorrect hero name
+     * When I retreive details for that hero
+     * Then I receive a message that it doesn't exist
+     */
+
+    @Test
+    public void findHeroByName() throws Exception {
+
+        mockMvc.perform(get("/api/heroes/name/{name}","Rocky"))
+                                .andExpect(status().isOk());
+
+    }
+
 
 
 
