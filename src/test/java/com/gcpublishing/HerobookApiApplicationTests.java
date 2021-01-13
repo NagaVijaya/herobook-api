@@ -99,14 +99,56 @@ HeroService heroService;
      */
 
     @Test
-    public void findHeroByName() throws Exception {
-
+    public void testFindHeroByName() throws Exception {
+        Hero hero = buildHero();
+        heroService.addHero(hero);
         mockMvc.perform(get("/api/heroes/name/{name}","Rocky"))
-                                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.id").value(hero.getId()))
+                .andExpect(jsonPath("$.agility").value(hero.getAgility()))
+                .andExpect(jsonPath("$.description").value(hero.getDescription()))
+                .andExpect(jsonPath("$.height").value(hero.getHeight()))
+                .andExpect(jsonPath("$.name").value(hero.getName()))
+                .andExpect(jsonPath("$.realName").value(hero.getRealName()))
+                .andExpect(jsonPath("$.height").value(hero.getHeight()))
+                .andExpect(jsonPath("$.weight").value(hero.getWeight()))
+                .andExpect(jsonPath("$.specialPower").value(hero.getSpecialPower()))
+                .andExpect(jsonPath("$.speed").value(hero.getSpeed()))
+                .andExpect(jsonPath("$.strength").value(hero.getStrength()))
+                .andExpect(jsonPath("$.story").value(hero.getStory()))
+                .andExpect(jsonPath("$.intelligence").value(hero.getIntelligence()))
+                .andExpect(jsonPath("$.image").value(hero.getImage()));
 
     }
 
+    @Test
+    public void testFindHeroByNameNotFound() throws Exception {
+        Hero hero = buildHero();
+        heroService.addHero(hero);
+        MvcResult mvcResult = mockMvc.perform(get("/api/heroes/name/{name}", "Rocky1"))
+                .andExpect(status().isOk())
+                .andReturn();
+        assertThat(mvcResult.getResponse().getContentAsString()).isEmpty();
+    }
 
 
+    private Hero buildHero() {
+        Hero hero = new Hero(1, "Rocky");
+        hero.setImage("Rocky-image");
+        hero.setRealName("Rocky-realName");
+        hero.setHeight(160);
+        hero.setWeight(200);
+        hero.setSpecialPower("Rocky-sp");
+        hero.setIntelligence("Rocky-intelligent");
+        hero.setStrength("Rocky-strength");
+        hero.setPower("Rocky-power");
+        hero.setSpeed(200);
+        hero.setAgility("Rocky-agility");
+        hero.setDescription("Rocky-description");
+        hero.setStory("Rocky-story");
+
+        return hero;
+    }
 
 }

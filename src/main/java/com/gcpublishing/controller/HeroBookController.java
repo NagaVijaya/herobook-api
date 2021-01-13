@@ -26,6 +26,6 @@ public class HeroBookController {
     @GetMapping("/api/heroes/name/{name}")
     public Hero findHeroByName(@PathVariable String name){
 
-        return null;
+        return heroService.findByName(name);
     }
 }
