@@ -19,4 +19,8 @@ public class HeroService {
     public void addHero(Hero hero) {
         heroRepository.save(hero);
     }
+
+    public Hero findByName(String name) {
+        return heroRepository.findByName(name);
+    }
 }
