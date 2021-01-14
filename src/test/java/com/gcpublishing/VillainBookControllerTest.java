@@ -44,4 +44,14 @@ public class VillainBookControllerTest {
 
     }
 
+    @Test
+    public void testFindAllVillainsWithEmptyList() throws Exception {
+
+
+        mockMvc.perform(get("/api/villains"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(0)));
+
+    }
 }
