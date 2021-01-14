@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-class HerobookApiApplicationTests {
+class HeroBookControllerTest {
 
 @Autowired
 MockMvc mockMvc;
