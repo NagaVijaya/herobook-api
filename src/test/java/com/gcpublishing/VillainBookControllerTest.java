@@ -47,11 +47,25 @@ public class VillainBookControllerTest {
     @Test
     public void testFindAllVillainsWithEmptyList() throws Exception {
 
-
         mockMvc.perform(get("/api/villains"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$", hasSize(0)));
+
+    }
+
+    @Test
+    public void testFindAllVillainsWithOneValue() throws Exception {
+
+        villainService.addVillain(new Villain(1, "villain1"));
+
+        mockMvc.perform(get("/api/villains"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].name").value("villain1"));
+
 
     }
 }
