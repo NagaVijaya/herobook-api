@@ -25,6 +25,15 @@ public class Villain {
     private String description;
     private String story;
 
+    public Villain(){
+
+    }
+
+    public Villain(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
