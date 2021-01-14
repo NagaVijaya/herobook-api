@@ -22,4 +22,8 @@ public class VillainService {
     public void addVillain(Villain villain) {
          villainRepository.save(villain);
     }
+
+    public Villain findByName(String name) {
+        return villainRepository.findByName(name);
+    }
 }
