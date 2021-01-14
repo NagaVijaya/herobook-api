@@ -28,8 +28,18 @@ public class VillainBookControllerTest {
     @Autowired
     VillainService villainService;
 
+    /**
+     *
+     * As a visitor, I can view all the villains.
+     *
+     * When I view all the villains
+     * Then I can see names of all villains
+     *
+     *
+     */
+
     @Test
-    public void testFindAllVillains() throws Exception {
+    public void testFindAllVillainsWithMultipleVillains() throws Exception {
 
         villainService.addVillain(new Villain(1, "villain1"));
         villainService.addVillain(new Villain(2, "villain2"));
@@ -44,6 +54,16 @@ public class VillainBookControllerTest {
 
     }
 
+    /**
+     *
+     * As a visitor, I can view all the villains.
+     *
+     * When I view all the villains
+     * Then I can see names of all villains
+     *
+     *
+     */
+
     @Test
     public void testFindAllVillainsWithEmptyList() throws Exception {
 
@@ -53,6 +73,16 @@ public class VillainBookControllerTest {
                 .andExpect(jsonPath("$", hasSize(0)));
 
     }
+
+    /**
+     *
+     * As a visitor, I can view all the villains.
+     *
+     * When I view all the villains
+     * Then I can see names of all villains
+     *
+     *
+     */
 
     @Test
     public void testFindAllVillainsWithOneValue() throws Exception {
@@ -66,6 +96,31 @@ public class VillainBookControllerTest {
                 .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].name").value("villain1"));
 
+    }
+
+    /**
+     * As a visitor, I can see information about any individual hero so that I can see their stats.
+     *
+     * Rule: Villains have an arch rival, image, real name, hero name, height, weight, special power, intelligence, strength, power, speed, agility, description, and story.
+     *
+     * Given I have the name of a villain
+     * When I retreive the villain
+     * Then I can view all the details for that villain
+     *
+     * Given I have an incorrect villain name
+     * When I retreive details for that villain
+     * Then I receive a message that it doesn't exist
+     */
+
+    @Test
+    public void testFindByNameFound() throws Exception {
+        mockMvc.perform(get("/api/villains/name/{name}","Villain1"))
+                .andExpect(status().isOk())
+                .andDo(print());
+
 
     }
+
+
+
 }

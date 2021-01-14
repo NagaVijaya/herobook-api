@@ -132,6 +132,7 @@ HeroService heroService;
         heroService.addHero(hero);
         MvcResult mvcResult = mockMvc.perform(get("/api/heroes/name/{name}", "Rocky1"))
                 .andExpect(status().isNotFound())
+                .andDo(print())
                 .andReturn();
         assertThat(mvcResult.getResponse().getContentAsString()).isEmpty();
     }
