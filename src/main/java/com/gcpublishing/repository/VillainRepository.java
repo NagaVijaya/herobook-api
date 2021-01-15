@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VillainRepository extends JpaRepository<Villain,Integer> {
-   public Villain findByName(String name);
+    Villain findByName(String name);
 }
