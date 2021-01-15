@@ -1,4 +1,4 @@
-package com.gcpublishing;
+package com.gcpublishing.services;
 
 import com.gcpublishing.entity.Hero;
 import com.gcpublishing.entity.Villain;
@@ -115,6 +115,7 @@ public class VillainServiceTest {
         villain.setAgility("Villain-agility");
         villain.setDescription("Villain-description");
         villain.setStory("Villain-story");
+        villain.setArchRival("Villain-archRival");
         return villain;
     }
 
@@ -137,6 +138,7 @@ public class VillainServiceTest {
             villain.setAgility("Villain"+i+"-agility");
             villain.setDescription("Villain"+i+"-description");
             villain.setStory("Villain"+i+"-story");
+            villain.setArchRival("Villain"+i+"-archRival");
             villainList.add(villain);
         }
         return villainList;

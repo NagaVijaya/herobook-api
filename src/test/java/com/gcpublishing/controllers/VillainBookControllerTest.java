@@ -1,6 +1,6 @@
-package com.gcpublishing;
+package com.gcpublishing.controllers;
 
-import com.gcpublishing.entity.Hero;
+
 import com.gcpublishing.entity.Villain;
 import com.gcpublishing.service.VillainService;
 import org.junit.jupiter.api.Test;
@@ -157,6 +157,7 @@ public class VillainBookControllerTest {
         villain.setAgility("Villain-agility");
         villain.setDescription("Villain-description");
         villain.setStory("Villain-story");
+        villain.setArchRival("Villain-archRival");
         return villain;
     }
 

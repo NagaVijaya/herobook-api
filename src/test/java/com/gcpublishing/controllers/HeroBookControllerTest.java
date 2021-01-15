@@ -1,4 +1,4 @@
-package com.gcpublishing;
+package com.gcpublishing.controllers;
 
 import com.gcpublishing.entity.Hero;
 import com.gcpublishing.service.HeroService;
